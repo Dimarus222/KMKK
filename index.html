@@ -42,6 +42,10 @@
             --gradient-1: linear-gradient(135deg, #0B1A33 0%, #1E4A6F 100%);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Manrope', sans-serif;
             background: var(--gradient-1);
@@ -51,6 +55,10 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        body.menu-open {
+            overflow: hidden;
         }
 
         /* Главный контент растягивается, чтобы footer был внизу */
@@ -242,7 +250,7 @@
 
         .page {
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .page.active {
@@ -250,7 +258,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -263,6 +271,12 @@
             margin: 1.5rem 0 2rem;
             padding: clamp(3rem, 10vw, 5rem) 2rem;
             text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero h2 {
@@ -290,14 +304,34 @@
             font-weight: 700;
             border: none;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             font-size: 0.95rem;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 184, 28, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(255, 184, 28, 0.4);
         }
 
         p, li {
@@ -317,6 +351,12 @@
             padding: clamp(1.5rem, 4vw, 2.5rem);
             border-radius: 24px;
             border: 1px solid rgba(255, 184, 28, 0.25);
+            transition: transform 0.3s;
+        }
+
+        .about-text:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
         }
 
         .about-text p {
@@ -331,6 +371,7 @@
             overflow: hidden;
             height: clamp(280px, 40vw, 450px);
             border: 2px solid var(--gold);
+            transition: transform 0.3s;
         }
 
         .about-image img {
@@ -357,15 +398,16 @@
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid rgba(255, 184, 28, 0.2);
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             border-color: var(--gold);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-img {
@@ -458,7 +500,17 @@
         .timeline-item {
             margin-bottom: 2rem;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
         }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
 
         .timeline-content {
             background: rgba(255, 255, 255, 0.08);
@@ -467,6 +519,12 @@
             border-radius: 16px;
             width: 45%;
             border: 1px solid rgba(255, 184, 28, 0.25);
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--gold);
+            transform: scale(1.02);
         }
 
         .timeline-item:nth-child(odd) .timeline-content {
@@ -477,6 +535,13 @@
             color: var(--gold);
             font-weight: 700;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-date i {
+            font-size: 1.2rem;
         }
 
         .document-category {
@@ -520,7 +585,7 @@
 
         .contact-card:hover {
             border-color: var(--gold);
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         .contact-icon {
@@ -559,12 +624,14 @@
             background: rgba(255, 255, 255, 0.1);
             color: var(--white);
             font-family: inherit;
+            transition: all 0.3s;
         }
 
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
             border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .contact-form textarea {
@@ -615,6 +682,7 @@
         .social-links a:hover {
             background: var(--gold);
             color: var(--deep-navy);
+            transform: translateY(-3px);
         }
 
         .footer-links h4 {
@@ -638,6 +706,7 @@
 
         .footer-links ul li a:hover {
             color: var(--gold);
+            padding-left: 5px;
         }
 
         .copyright {
@@ -660,6 +729,38 @@
         #best-members .grid-3 .card-img img {
             object-fit: cover;
             object-position: top center;
+        }
+
+        /* Кнопка "Наверх" */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+            border: none;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            background: var(--white);
         }
 
         @media (max-width: 992px) {
@@ -697,6 +798,12 @@
             }
             #documents .card-img {
                 height: 350px;
+            }
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
             }
         }
 
@@ -776,12 +883,12 @@
         <div class="container">
             <h2 class="section-title">История Кадетского Парламента</h2>
             <div class="timeline">
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2022 год - Осень</div><h3>Создание Кадетского Парламента</h3><p>Реформирование бывшего органа ученического самоуправления КСоЛД в Кадетский Парламент кадетом 9-ого класса, Каверзиным Иваном Игоревичом. Первые выборы Председателя и членов Кадетского Парламента.</p></div></div>
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2022 год - Зима</div><h3>Первые крупные изменения</h3><p>Организация первых масштабных мероприятий, создание Положения о Кадетском Парламенте, формирование состава Кадетского Парламента, начало работы.</p></div></div>
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2022 год - Весна</div><h3>Первые результаты</h3><p>Завершение года, подведение итогов и выявление лучших по истечению периода. Подача отчетов Директору корпуса.</p></div></div>
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2023 год - Осень</div><h3>Межкорпусное сотрудничество</h3><p>Налаживание партнерских отношений с кадетскими парламентами других корпусов, проведение совместных онлайн - встреч и обмен опытом.</p></div></div>
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2023 год - Весна</div><h3>Окончание срока Первого Председателя</h3><p>Награждение похвальными грамотами и орденами "Военно - Морской Флот".</p></div></div>
-                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date">2025 год - Осень</div><h3>Создание первого сайта Кадетского Парламента</h3><p>Развитие в цифровой сфере для увеличения массовой известности в кругах корпуса, города и края.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-leaf"></i> 2022 год - Осень</div><h3>Создание Кадетского Парламента</h3><p>Реформирование бывшего органа ученического самоуправления КСоЛД в Кадетский Парламент кадетом 9-ого класса, Каверзиным Иваном Игоревичом. Первые выборы Председателя и членов Кадетского Парламента.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-snowflake"></i> 2022 год - Зима</div><h3>Первые крупные изменения</h3><p>Организация первых масштабных мероприятий, создание Положения о Кадетском Парламенте, формирование состава Кадетского Парламента, начало работы.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-seedling"></i> 2022 год - Весна</div><h3>Первые результаты</h3><p>Завершение года, подведение итогов и выявление лучших по истечению периода. Подача отчетов Директору корпуса.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-handshake"></i> 2023 год - Осень</div><h3>Межкорпусное сотрудничество</h3><p>Налаживание партнерских отношений с кадетскими парламентами других корпусов, проведение совместных онлайн - встреч и обмен опытом.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-trophy"></i> 2023 год - Весна</div><h3>Окончание срока Первого Председателя</h3><p>Награждение похвальными грамотами и орденами "Военно - Морской Флот".</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><div class="timeline-date"><i class="fas fa-globe"></i> 2025 год - Осень</div><h3>Создание первого сайта Кадетского Парламента</h3><p>Развитие в цифровой сфере для увеличения массовой известности в кругах корпуса, города и края.</p></div></div>
             </div>
             <section style="margin-top: 4rem;"><h2 class="section-title">Достижения за годы работы</h2><div class="grid-3"><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Награды</h3><p>За активную работу на корпусном уровне, первый Председатель и Вице-Председатель Кадетского Парламента были удостоены Высшей Награды Кадетского Парламента, ордена "Военно-Морской Флот", а также Благодарственной Грамоты от Директора Корпуса.</p></div></div><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Участники</h3><p>Более 40 кадет приняли участие в работе Кадетского Парламента за всю историю его существования, активно развивая Орган на корпусном уровне и проявляя инициативу в развитии отношений между кадетами и администрацией.</p></div></div><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Проекты</h3><p>Под руководством Кадетского Парламента в 2025-ом учебном году было положено начало разработке проекта "Каток" для облагораживания и продуктивной эксплуатации прилегающей к корпусу территории.</p></div></div></div></section>
             <section style="margin-top: 4rem;"><h2 class="section-title">Галерея достижений</h2><div class="grid-3"><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Награды наших кадет</h3><p>За последние 3 года кадеты Кадетского Парламента получили более 70 наград, участвуя в олимпиадах, соревнованиях и конкурсах различных уровней (от муниципального до международного).</p></div></div><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Выпускники-медалисты</h3><p>2 выпускника-члена Кадетского Парламента закончили корпус с золотыми медалями за последние 3 года. Медалисты без проблем смогли поступить в ВУЗ-ы страны, которые выбрали изначально.</p></div></div><div class="card"><div class="card-content" style="padding-top: 2rem;"><h3>Поступления в вузы</h3><p>100% выпускников-членов Кадетского Парламента поступают в высшие учебные военные и гражданские заведения Российской Федерации имея запас и высокие места в рейтингах поступления.</p></div></div></div></section>
@@ -801,7 +908,6 @@
         </div>
     </div>
 
-    <!-- РАЗДЕЛ ДЕЯТЕЛЬНОСТЬ — ДОБАВЛЕНЫ ИКОНКИ И УВЕЛИЧЕНА ВЫСОТА КАРТОЧЕК -->
     <div id="activities" class="page">
         <div class="container">
             <h2 class="section-title">Направления деятельности</h2>
@@ -828,7 +934,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Дополнительный блок с цитатой, чтобы визуально заполнить пространство и сделать раздел более солидным -->
             <div style="margin-top: 3rem; text-align: center; padding: 2rem; background: rgba(255, 184, 28, 0.1); border-radius: 24px; border-left: 4px solid var(--gold);">
                 <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--gold); opacity: 0.5; margin-bottom: 1rem; display: inline-block;"></i>
                 <p style="font-style: italic; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">«Мы не просто выполняем обязанности — мы формируем будущее кадетского братства. Каждый наш шаг направлен на развитие, дисциплину и честь»</p>
@@ -848,17 +953,36 @@
             <div><div class="footer-logo">⚓ Кадетский Парламент</div><p>Официальный сайт Кадетского Парламента Канского Морского Кадетского Корпуса - органа ученического самоуправления.</p><div class="social-links"><a href="https://vk.com/kadetskyparlament"><i class="fab fa-vk"></i></a></div></div>
             <div class="footer-links"><h4>Быстрые ссылки</h4><ul><li><a href="#" class="footer-nav-link" data-page="home">Главная</a></li><li><a href="#" class="footer-nav-link" data-page="history">История</a></li><li><a href="#" class="footer-nav-link" data-page="best-members">Лучшие кадеты</a></li><li><a href="#" class="footer-nav-link" data-page="activities">Деятельность</a></li><li><a href="#" class="footer-nav-link" data-page="documents">Документы</a></li><li><a href="#" class="footer-nav-link" data-page="contact">Контакты</a></li></ul></div>
         </div>
-        <div class="copyright"><p>&copy; 2025 Кадетский Парламент Канского морского кадетского корпуса. Все права защищены.</p></div>
+        <div class="copyright"><p>&copy; <span id="currentYear"></span> Кадетский Парламент Канского морского кадетского корпуса. Все права защищены.</p></div>
     </div>
 </footer>
 
+<button class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
+
 <script>
+    // Динамический год в копирайте
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileNav = document.getElementById('mobileNav');
     const menuOverlay = document.getElementById('menuOverlay');
-    function closeMenu() { mobileNav.classList.remove('active'); menuOverlay.classList.remove('active'); burgerBtn.classList.remove('active'); }
-    function openMenu() { mobileNav.classList.add('active'); menuOverlay.classList.add('active'); burgerBtn.classList.add('active'); }
-    burgerBtn.addEventListener('click', () => { mobileNav.classList.contains('active') ? closeMenu() : openMenu(); });
+    const body = document.body;
+    
+    function closeMenu() { 
+        mobileNav.classList.remove('active'); 
+        menuOverlay.classList.remove('active'); 
+        burgerBtn.classList.remove('active');
+        body.classList.remove('menu-open');
+    }
+    function openMenu() { 
+        mobileNav.classList.add('active'); 
+        menuOverlay.classList.add('active'); 
+        burgerBtn.classList.add('active');
+        body.classList.add('menu-open');
+    }
+    burgerBtn.addEventListener('click', () => { 
+        mobileNav.classList.contains('active') ? closeMenu() : openMenu(); 
+    });
     menuOverlay.addEventListener('click', closeMenu);
     
     const navLinks = document.querySelectorAll('.mobile-nav-link, .footer-nav-link');
@@ -896,6 +1020,19 @@
             } catch { status.innerHTML = "✗ Ошибка отправки"; status.style.border = "1px solid #d32f2f"; setTimeout(() => status.remove(), 4000); }
         });
     }
+
+    // Кнопка "Наверх"
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollBtn.classList.add('show');
+        } else {
+            scrollBtn.classList.remove('show');
+        }
+    });
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 </script>
 </body>
 </html>
